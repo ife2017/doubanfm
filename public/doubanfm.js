@@ -1,8 +1,46 @@
+class Visualizer {
+  constructor(selector, audio) {
+    audio.crossOrigin = 'anonymous'
+    this.$root = document.querySelector(selector)
+    this.audioContext = new AudioContext()
+    this.analyser = this.audioContext.createAnalyser()
+    this.audioSrouce = this.audioContext.createMediaElementSource(audio)
+    this.audioSrouce.connect(this.analyser)
+    this.analyser.connect(this.audioContext.destination)
+    this.data = new Uint8Array(this.analyser.frequencyBinCount)
+    this.bars = 256
+    this.$bars = []
+    this.init()
+    this.update()
+  }
+
+  init() {
+    const barWidth = this.$root.clientWidth / this.bars - 1
+    for (let i = 0; i < this.bars; i += 1) {
+      const $bar = document.createElement('div')
+      $bar.className = 'frequency-bar'
+      $bar.style.width = barWidth + 'px'
+      $bar.style.left = (barWidth + 1) * i + 'px'
+      this.$bars.push($bar)
+      this.$root.appendChild($bar)
+    }
+  }
+
+  update() {
+    requestAnimationFrame(this.update.bind(this))
+    this.analyser.getByteFrequencyData(this.data)
+    for (let i = 0; i < this.bars; i += 1) {
+      this.$bars[i].style.height = this.data[i] / 2 + 'px'
+    }
+  }
+}
+
 class DoubanFM {
   constructor() {
     this.audio = new Audio()
     this.audio.addEventListener('ended', this.next.bind(this))
     this.audio.addEventListener('timeupdate', this.updateProgress.bind(this))
+    this.visualizer = new Visualizer('.visualizer', this.audio)
     this.playlist = playlist
     this.playlistIndex = 0
     this.$playlist = document.querySelector('.doubanfm-playlist')

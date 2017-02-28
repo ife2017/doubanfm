@@ -1,6 +1,7 @@
 body {
   background-color: rgba(250, 250, 250, 0.933333);
   cursor: default;
+  margin: 0;
 }
 
 .icon {
@@ -14,6 +15,23 @@ body {
 
 .icon-volume {
   cursor: default;
+}
+
+.visualizer {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.frequency-bar {
+  display: inline-block;
+  background: rgba(47, 152, 66, 0.1);
+  transition: height 0.1s;
+  position: absolute;
+  bottom: 0;
 }
 
 .doubanfm-playlist {
@@ -42,6 +60,10 @@ body {
 .doubanfm-playlist-item {
   margin-bottom: 12px;
   cursor: pointer;
+}
+
+.doubanfm-playlist-item:last-child {
+  margin-bottom: 0;
 }
 
 .doubanfm-playlist-item:hover {
