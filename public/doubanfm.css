@@ -1,0 +1,119 @@
+body {
+  background-color: rgba(250, 250, 250, 0.933333);
+}
+
+.icon {
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.icon-pause {
+  display: none;
+}
+
+.doubanfm-cover {
+  width: 240px;
+  height: 240px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -120px;
+  margin-left: 255px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.doubanfm-cover img {
+  width: 100%;
+  display: block;
+}
+
+.doubanfm-cover span {
+  visibility: hidden;
+  width: 90px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -45px;
+  font-size: 12px;
+  color: #fff;
+  background: rgba(0,0,0,.6);
+  border-radius: 1px;
+}
+
+.doubanfm-cover:hover span {
+  visibility: visible;
+}
+
+.doubanfm-player {
+  width: 430px;
+  height: 180px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -215px;
+}
+
+.doubanfm-title {
+  font-size: 25px;
+  color: rgb(3, 3, 3);
+}
+
+.doubanfm-artist {
+  font-size: 15px;
+  color: rgb(74, 74, 74);
+  line-height: 2;
+}
+
+.doubanfm-operations {
+  margin-top: 5px;
+}
+
+.doubanfm-time {
+  font-size: 11px;
+  color: rgb(155, 155, 155);
+  margin-right: 15px;
+}
+
+.doubanfm-progress {
+  height: 1px;
+  background-color: #dadada;
+  margin: 5px 0;
+}
+
+.dobuanfm-progress-value {
+  height: 100%;
+  width: 50%;
+  background-color: rgb(107, 189, 122);
+}
+
+.doubanfm-buttons {
+  float: right;
+}
+
+.doubanfm-controls {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.doubanfm-controls .icon {
+  margin: 0 15px;
+}
+
+.doubanfm-controls .icon:first-child {
+  margin-left: 0;
+}
+
+.doubanfm-controls .icon:last-child {
+  margin-right: 0;
+}
+
+.doubanfm-controls .right {
+  float: right;
+}
