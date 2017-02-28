@@ -2,11 +2,14 @@ class DoubanFM {
   constructor() {
     this.audio = new Audio()
     this.audio.addEventListener('ended', this.next.bind(this))
+    this.audio.addEventListener('timeupdate', this.updateProgress.bind(this))
     this.playlist = playlist
     this.playlistIndex = -1
     this.$title = document.querySelector('.doubanfm-title')
     this.$artist = document.querySelector('.doubanfm-artist')
     this.$cover = document.querySelector('.doubanfm-cover img')
+    this.$progress = document.querySelector('.doubanfm-progress-value')
+    this.$time = document.querySelector('.doubanfm-time')
     this.$play = document.querySelector('.icon-play')
     this.$pause = document.querySelector('.icon-pause')
     this.$prev = document.querySelector('.icon-prev')
@@ -16,6 +19,17 @@ class DoubanFM {
     this.$prev.addEventListener('click', this.prev.bind(this))
     this.$next.addEventListener('click', this.next.bind(this))
     this.next()
+  }
+
+  updateProgress(value) {
+    const time = parseInt(this.song.length - this.audio.currentTime)
+    const minute = parseInt(time / 60)
+    let second = time % 60
+    if (second < 10) {
+      second = '0' + second
+    }
+    this.$time.textContent = `-${minute}:${second}`
+    this.$progress.style.width = (this.audio.currentTime / this.song.length * 100) + '%'
   }
 
   load() {
@@ -43,9 +57,7 @@ class DoubanFM {
     } else {
       this.playlistIndex -= 1
     }
-    this.song = this.playlist[this.playlistIndex]
-    this.load()
-    this.play()
+    this.loadAndPlay()
   }
 
   next() {
@@ -54,6 +66,10 @@ class DoubanFM {
     } else {
       this.playlistIndex += 1
     }
+    this.loadAndPlay()
+  }
+
+  loadAndPlay() {
     this.song = this.playlist[this.playlistIndex]
     this.load()
     this.play()

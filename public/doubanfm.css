@@ -86,9 +86,8 @@ body {
   margin: 5px 0;
 }
 
-.dobuanfm-progress-value {
+.doubanfm-progress-value {
   height: 100%;
-  width: 50%;
   background-color: rgb(107, 189, 122);
 }
 
