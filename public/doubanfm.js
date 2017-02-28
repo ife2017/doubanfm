@@ -4,6 +4,7 @@ class Visualizer {
     this.$root = document.querySelector(selector)
     this.audioContext = new AudioContext()
     this.analyser = this.audioContext.createAnalyser()
+    this.analyser.fftSize = 1024
     this.audioSrouce = this.audioContext.createMediaElementSource(audio)
     this.audioSrouce.connect(this.analyser)
     this.analyser.connect(this.audioContext.destination)
@@ -72,7 +73,9 @@ class DoubanFM {
       </div>`
     }).join('')
     this.$playlist.addEventListener('click', event => {
-      this.loadAndPlay(parseInt(event.target.dataset.index))
+      if (event.target.dataset.index) {
+        this.loadAndPlay(parseInt(event.target.dataset.index))
+      }
     })
     this.$playlistItems = document.querySelectorAll('.doubanfm-playlist-item')
   }
