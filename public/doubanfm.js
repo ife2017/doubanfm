@@ -8,6 +8,7 @@ class DoubanFM {
     this.$title = document.querySelector('.doubanfm-title')
     this.$artist = document.querySelector('.doubanfm-artist')
     this.$cover = document.querySelector('.doubanfm-cover img')
+    this.$coverLink = document.querySelector('.doubanfm-cover')
     this.$volumeSlider = document.querySelector('.doubanfm-volume-slider')
     this.$volumeSlider.addEventListener('click', this.setVolume.bind(this))
     this.$volume = document.querySelector('.doubanfm-volume-value')
@@ -46,6 +47,7 @@ class DoubanFM {
     this.$title.textContent = this.song.title
     this.$artist.textContent = this.song.artist
     this.$cover.src = this.song.picture
+    this.$coverLink.href = 'https://music.douban.com' + this.song.album
     this.audio.src = this.song.url
   }
 
