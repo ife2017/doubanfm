@@ -8,6 +8,9 @@ class DoubanFM {
     this.$title = document.querySelector('.doubanfm-title')
     this.$artist = document.querySelector('.doubanfm-artist')
     this.$cover = document.querySelector('.doubanfm-cover img')
+    this.$volumeSlider = document.querySelector('.doubanfm-volume-slider')
+    this.$volumeSlider.addEventListener('click', this.setVolume.bind(this))
+    this.$volume = document.querySelector('.doubanfm-volume-value')
     this.$progress = document.querySelector('.doubanfm-progress-value')
     this.$time = document.querySelector('.doubanfm-time')
     this.$play = document.querySelector('.icon-play')
@@ -19,6 +22,13 @@ class DoubanFM {
     this.$prev.addEventListener('click', this.prev.bind(this))
     this.$next.addEventListener('click', this.next.bind(this))
     this.next()
+  }
+
+  setVolume() {
+    const rect = this.$volumeSlider.getBoundingClientRect()
+    const volume = (event.x - rect.left) / rect.width
+    this.$volume.style.width = volume * 100 + '%'
+    this.audio.volume = volume
   }
 
   updateProgress(value) {
@@ -76,4 +86,4 @@ class DoubanFM {
   }
 }
 
-new DoubanFM()
+const app = new DoubanFM()

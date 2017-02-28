@@ -1,5 +1,6 @@
 body {
   background-color: rgba(250, 250, 250, 0.933333);
+  cursor: default;
 }
 
 .icon {
@@ -9,6 +10,10 @@ body {
 
 .icon-pause {
   display: none;
+}
+
+.icon-volume {
+  cursor: default;
 }
 
 .doubanfm-cover {
@@ -115,4 +120,24 @@ body {
 
 .doubanfm-controls .right {
   float: right;
+}
+
+.doubanfm-volume:hover .doubanfm-volume-slider {
+  display: inline-block;
+}
+
+.doubanfm-volume-slider {
+  display: none;
+  vertical-align: middle;
+  width: 50px;
+  height: 2px;
+  background-color: rgb(229, 229, 232);
+  cursor: pointer;
+}
+
+.doubanfm-volume-value {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(151, 151, 151);
 }
