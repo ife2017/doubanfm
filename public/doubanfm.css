@@ -16,6 +16,42 @@ body {
   cursor: default;
 }
 
+.doubanfm-playlist {
+  width: 240px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -495px;
+  overflow: auto;
+  font-size: 13px;
+  color: #7c7b82;
+}
+
+.doubanfm-playlist::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+
+.doubanfm-playlist:hover::-webkit-scrollbar-thumb {
+  background: hsla(0,0%,77%,.3);
+  border-radius: 11px;
+}
+
+.doubanfm-playlist-item {
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.doubanfm-playlist-item:hover {
+  color: #4a4a4a;
+}
+
+.doubanfm-playlist-item.active {
+  color: #000;
+}
+
 .doubanfm-cover {
   width: 240px;
   height: 240px;

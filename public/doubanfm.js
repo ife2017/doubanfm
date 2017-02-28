@@ -4,7 +4,8 @@ class DoubanFM {
     this.audio.addEventListener('ended', this.next.bind(this))
     this.audio.addEventListener('timeupdate', this.updateProgress.bind(this))
     this.playlist = playlist
-    this.playlistIndex = -1
+    this.playlistIndex = 0
+    this.$playlist = document.querySelector('.doubanfm-playlist')
     this.$title = document.querySelector('.doubanfm-title')
     this.$artist = document.querySelector('.doubanfm-artist')
     this.$cover = document.querySelector('.doubanfm-cover img')
@@ -22,7 +23,20 @@ class DoubanFM {
     this.$pause.addEventListener('click', this.pause.bind(this))
     this.$prev.addEventListener('click', this.prev.bind(this))
     this.$next.addEventListener('click', this.next.bind(this))
-    this.next()
+    this.initPlaylist()
+    this.loadAndPlay(0)
+  }
+
+  initPlaylist() {
+    this.$playlist.innerHTML = playlist.map((item, index) => {
+      return `<div class="doubanfm-playlist-item" data-index="${index}">
+        ${index + 1}. ${item.title} - ${item.artist}
+      </div>`
+    }).join('')
+    this.$playlist.addEventListener('click', event => {
+      this.loadAndPlay(parseInt(event.target.dataset.index))
+    })
+    this.$playlistItems = document.querySelectorAll('.doubanfm-playlist-item')
   }
 
   setVolume() {
@@ -49,6 +63,7 @@ class DoubanFM {
     this.$cover.src = this.song.picture
     this.$coverLink.href = 'https://music.douban.com' + this.song.album
     this.audio.src = this.song.url
+    document.title = this.song.title
   }
 
   play() {
@@ -65,23 +80,24 @@ class DoubanFM {
 
   prev() {
     if (this.playlistIndex == 0) {
-      this.playlistIndex = this.playlist.length - 1
+      this.loadAndPlay(this.playlist.length - 1)
     } else {
-      this.playlistIndex -= 1
+      this.loadAndPlay(this.playlistIndex - 1)
     }
-    this.loadAndPlay()
   }
 
   next() {
     if (this.playlistIndex == this.playlist.length - 1) {
-      this.playlistIndex = 0
+      this.loadAndPlay(0)
     } else {
-      this.playlistIndex += 1
+      this.loadAndPlay(this.playlistIndex + 1)
     }
-    this.loadAndPlay()
   }
 
-  loadAndPlay() {
+  loadAndPlay(index) {
+    this.$playlistItems[this.playlistIndex].classList.remove('active')
+    this.playlistIndex = index
+    this.$playlistItems[this.playlistIndex].classList.add('active')
     this.song = this.playlist[this.playlistIndex]
     this.load()
     this.play()
