@@ -1,42 +1,32 @@
 /**
  * 音频可视化模块
- * 可以考虑用 canvas 实现
  */
 class Visualizer {
   constructor(selector, audio) {
+    this.$canvas = document.querySelector(selector)
+    this.$canvas.width = document.body.clientWidth
+    this.$canvas.height = 256
+    this.canvasContext = this.$canvas.getContext('2d')
+
     audio.crossOrigin = 'anonymous'
-    this.$root = document.querySelector(selector)
     this.audioContext = new AudioContext()
     this.analyser = this.audioContext.createAnalyser()
-    this.analyser.fftSize = 512
     this.audioSrouce = this.audioContext.createMediaElementSource(audio)
     this.audioSrouce.connect(this.analyser)
     this.analyser.connect(this.audioContext.destination)
-    this.data = new Uint8Array(this.analyser.frequencyBinCount)
-    // 只用前 1/4 数据，也就是低频数据
-    this.bars = this.analyser.fftSize / 4
-    this.$bars = []
-    this.initBars()
-    this.update()
+    this.frequencyData = new Uint8Array(this.analyser.frequencyBinCount)
+    this.draw()
   }
 
-  initBars() {
-    const barWidth = this.$root.clientWidth / this.bars - 1
-    for (let i = 0; i < this.bars; i += 1) {
-      const $bar = document.createElement('div')
-      $bar.className = 'frequency-bar'
-      $bar.style.width = barWidth + 'px'
-      $bar.style.left = (barWidth + 1) * i + 'px'
-      this.$bars.push($bar)
-      this.$root.appendChild($bar)
-    }
-  }
-
-  update() {
-    requestAnimationFrame(this.update.bind(this))
-    this.analyser.getByteFrequencyData(this.data)
-    for (let i = 0; i < this.bars; i += 1) {
-      this.$bars[i].style.height = this.data[i] + 'px'
+  draw() {
+    requestAnimationFrame(this.draw.bind(this))
+    this.analyser.getByteFrequencyData(this.frequencyData)
+    const length = this.analyser.fftSize / 4 // 只取低频数据
+    const width = this.$canvas.width / length - 1
+    this.canvasContext.clearRect(0, 0, this.$canvas.width, this.$canvas.height)
+    for (let i = 0; i < length; i += 1) {
+      this.canvasContext.fillStyle = 'rgba(47, 152, 66, 0.2)'
+      this.canvasContext.fillRect(i * (width + 1), this.$canvas.height - this.frequencyData[i], width, this.frequencyData[i])
     }
   }
 }
