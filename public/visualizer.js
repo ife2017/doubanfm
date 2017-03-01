@@ -21,12 +21,12 @@ class Visualizer {
   draw() {
     requestAnimationFrame(this.draw.bind(this))
     this.analyser.getByteFrequencyData(this.frequencyData)
-    const length = this.analyser.fftSize / 4 // 只取低频数据
-    const width = this.$canvas.width / length - 1
+    const length = this.analyser.fftSize / 3 // 只取低频数据
+    const width = this.$canvas.width / length - 0.5
     this.canvasContext.clearRect(0, 0, this.$canvas.width, this.$canvas.height)
     for (let i = 0; i < length; i += 1) {
       this.canvasContext.fillStyle = 'rgba(47, 152, 66, 0.2)'
-      this.canvasContext.fillRect(i * (width + 1), this.$canvas.height - this.frequencyData[i], width, this.frequencyData[i])
+      this.canvasContext.fillRect(i * (width + 0.5), this.$canvas.height - this.frequencyData[i], width, this.frequencyData[i])
     }
   }
 }
