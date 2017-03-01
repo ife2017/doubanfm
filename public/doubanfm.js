@@ -5,9 +5,10 @@ class DoubanFM {
     this.$artist = document.querySelector('.doubanfm-artist')
     this.$cover = document.querySelector('.doubanfm-cover img')
     this.$coverLink = document.querySelector('.doubanfm-cover')
-    this.$volumeSlider = document.querySelector('.doubanfm-volume-slider')
-    this.$volume = document.querySelector('.doubanfm-volume-value')
-    this.$progress = document.querySelector('.doubanfm-progress-value')
+    this.$volume = document.querySelector('.doubanfm-volume-slider')
+    this.$volumeValue = document.querySelector('.doubanfm-volume-value')
+    this.$progress = document.querySelector('.doubanfm-progress')
+    this.$progressValue = document.querySelector('.doubanfm-progress-value')
     this.$time = document.querySelector('.doubanfm-time')
     this.$play = document.querySelector('.icon-play')
     this.$pause = document.querySelector('.icon-pause')
@@ -21,7 +22,8 @@ class DoubanFM {
   }
 
   init() {
-    this.$volumeSlider.addEventListener('click', this.setVolume.bind(this))
+    this.$progress.addEventListener('click', this.setProgress.bind(this))
+    this.$volume.addEventListener('click', this.setVolume.bind(this))
     this.$play.addEventListener('click', this.play.bind(this))
     this.$pause.addEventListener('click', this.pause.bind(this))
     this.$prev.addEventListener('click', this.prev.bind(this))
@@ -46,14 +48,18 @@ class DoubanFM {
     this.$playlistItems = document.querySelectorAll('.doubanfm-playlist-item')
   }
 
-  setVolume() {
-    const rect = this.$volumeSlider.getBoundingClientRect()
+  setProgress(event) {
+    this.audio.currentTime = event.offsetX / this.$progress.clientWidth * this.audio.duration
+  }
+
+  setVolume(event) {
+    const rect = this.$volume.getBoundingClientRect()
     const volume = (event.x - rect.left) / rect.width
-    this.$volume.style.width = volume * 100 + '%'
+    this.$volumeValue.style.width = volume * 100 + '%'
     this.audio.volume = volume
   }
 
-  updateProgress(value) {
+  updateProgress() {
     const time = parseInt(this.song.length - this.audio.currentTime)
     const minute = parseInt(time / 60)
     let second = time % 60
@@ -61,7 +67,7 @@ class DoubanFM {
       second = '0' + second
     }
     this.$time.textContent = `-${minute}:${second}`
-    this.$progress.style.width = (this.audio.currentTime / this.song.length * 100) + '%'
+    this.$progressValue.style.width = (this.audio.currentTime / this.song.length * 100) + '%'
   }
 
   load() {

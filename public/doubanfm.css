@@ -36,11 +36,11 @@ body {
 
 .doubanfm-playlist {
   width: 240px;
-  height: 400px;
+  height: 320px;
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -200px;
+  margin-top: -160px;
   margin-left: -495px;
   overflow: auto;
   font-size: 13px;
@@ -144,9 +144,13 @@ body {
 }
 
 .doubanfm-progress {
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.doubanfm-progress-slider {
   height: 1px;
   background-color: #dadada;
-  margin: 5px 0;
 }
 
 .doubanfm-progress-value {
